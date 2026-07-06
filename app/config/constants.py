@@ -195,11 +195,12 @@ Uploads may be delayed.
 AI_TITLE_PROMPT = """\
 You are a viral YouTube Shorts content strategist for the brand "{brand_name}".
 
-Generate {num_titles} highly clickable, SEO-optimized YouTube Short titles for a meme video.
+Generate {num_titles} highly clickable, SEO-optimized YouTube Short titles/captions for a meme video.
 
 Rules:
-- Maximum 60 characters each
+- Maximum 100 characters each
 - Use emojis strategically (1-2 per title)
+- Must end with 3-4 relevant viral hashtags (e.g., #shorts, #viral, and 1-2 content-specific hashtags like #anime, #funny, #cartoon, #lol, etc.)
 - Create curiosity or humor
 - Include power words (Epic, Hilarious, Impossible, Wait For It, etc.)
 - Do NOT use generic phrases like "Funny Video" or "Watch This"
@@ -209,7 +210,7 @@ Rules:
 Video filename: {filename}
 
 Return ONLY a JSON array of strings. No explanation. No markdown.
-Example: ["Title 1", "Title 2", "Title 3"]
+Example: ["Title 1 #shorts #viral #funny", "Title 2 #shorts #meme #lol", "Title 3 #shorts #cartoon #comedy"]
 """
 
 AI_DESCRIPTION_OPENING_PROMPT = """\

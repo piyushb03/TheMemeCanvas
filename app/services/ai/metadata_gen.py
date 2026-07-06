@@ -158,12 +158,12 @@ class MetadataGenerator:
             score = 0
             length = len(title)
 
-            if 40 <= length <= 70:
+            if 40 <= length <= 100:
                 score += 2
             elif length < 20:
                 score -= 2
-            elif length > 80:
-                score -= 1
+            elif length > 110:
+                score -= 2
 
             # Has emoji?
             if any(ord(c) > 127 for c in title):
