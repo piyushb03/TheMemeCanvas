@@ -53,8 +53,8 @@ RUN mkdir -p \
     assets \
     assets/fonts
 
-# Copy assets (if any)
-COPY assets/ ./assets/ 2>/dev/null || true
+# Copy assets
+COPY assets/ ./assets/
 
 # Environment (overridden by docker-compose)
 ENV APP_ENV=production
