@@ -200,7 +200,8 @@ def trigger_upload_now() -> None:
 
         target_job = earliest_job or scheduler.get_job("daily_upload")
         if target_job:
-            scheduler.modify_job(target_job.id, next_run_time=datetime.now())
+            tz = pytz.timezone(settings.timezone)
+            scheduler.modify_job(target_job.id, next_run_time=datetime.now(tz))
             logger.info("Forced immediate upload triggered for job %s.", target_job.id)
         else:
             logger.error("No upload job found to trigger.")
