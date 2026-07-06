@@ -36,6 +36,7 @@ class AppSettings(BaseSettings):
     timezone: str = "Asia/Kolkata"
     upload_order: str = "oldest_first"  # oldest_first | newest_first | random
     uploads_paused: bool = False
+    disable_duplicate_check: bool = False
 
     # Google Drive
     google_service_account_file: Optional[Path] = None

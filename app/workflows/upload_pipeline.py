@@ -244,6 +244,10 @@ class UploadPipeline:
         upload.sha256 = sha256
         db.commit()
 
+        if settings.disable_duplicate_check:
+            logger.info("Duplicate check is disabled. Proceeding with upload.")
+            return True
+
         if is_duplicate(sha256, filename, file_id, db):
             logger.warning("Duplicate content detected — skipping upload.")
             upload.status = UploadStage.SKIPPED
