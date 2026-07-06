@@ -133,6 +133,14 @@ class UploadPipeline:
                 # --- STAGE 9: Mark complete ---
                 upload.status = UploadStage.COMPLETED
                 upload.completed_at = datetime.utcnow()
+                
+                from app.models.queue_item import QueueItem
+                q_item = db.query(QueueItem).filter(QueueItem.drive_file_id == file_id).first()
+                if q_item:
+                    q_item.is_processed = True
+                    q_item.processed_at = datetime.utcnow()
+                    q_item.upload_id = upload.id
+                
                 db.commit()
 
                 # --- STAGE 10: Cleanup ---
@@ -163,10 +171,18 @@ class UploadPipeline:
                 upload.retry_count = (upload.retry_count or 0) + 1
                 db.commit()
 
-                # Move to failed folder in Drive
+                # Move to failed folder in Drive and mark processed
                 try:
                     self.queue_manager.move_to_failed(file_id)
                     upload.moved_to_failed = True
+                    
+                    from app.models.queue_item import QueueItem
+                    q_item = db.query(QueueItem).filter(QueueItem.drive_file_id == file_id).first()
+                    if q_item:
+                        q_item.is_processed = True
+                        q_item.processed_at = datetime.utcnow()
+                        q_item.upload_id = upload.id
+                    
                     db.commit()
                 except Exception as move_exc:
                     logger.error("Failed to move file to Failed folder: %s", move_exc)
@@ -233,6 +249,14 @@ class UploadPipeline:
             upload.status = UploadStage.SKIPPED
             db.commit()
             self.queue_manager.move_to_uploaded(file_id)
+            
+            from app.models.queue_item import QueueItem
+            q_item = db.query(QueueItem).filter(QueueItem.drive_file_id == file_id).first()
+            if q_item:
+                q_item.is_processed = True
+                q_item.processed_at = datetime.utcnow()
+                q_item.upload_id = upload.id
+                db.commit()
             return False
 
         return True
