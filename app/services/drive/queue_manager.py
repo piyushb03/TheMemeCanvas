@@ -235,21 +235,41 @@ class QueueManager:
         """
         from app.models.queue_item import QueueItem
 
-        drive_files = self.client.list_files(
+        # Get all files (videos and images) in a single API call
+        all_folder_files = self.client.list_files(
             folder_id=settings.drive_queue_folder_id,
-            mime_types=VIDEO_MIME_TYPES,
         )
 
-        drive_ids = {f["id"] for f in drive_files}
+        drive_videos = []
+        thumbnail_by_stem = {}
+
+        # Categorize files and build thumbnail map
+        for f in all_folder_files:
+            name = f["name"]
+            suffix = Path(name).suffix.lower()
+            mime = f.get("mimeType", "")
+            
+            is_video = (mime in VIDEO_MIME_TYPES) or (suffix in SUPPORTED_VIDEO_EXTENSIONS)
+            if is_video:
+                drive_videos.append(f)
+            elif suffix in SUPPORTED_IMAGE_EXTENSIONS:
+                stem = Path(name).stem
+                thumbnail_by_stem[stem] = f
+
+        drive_ids = {f["id"] for f in drive_videos}
         new_count = 0
 
-        for f in drive_files:
-            existing = db_session.query(QueueItem).filter(
-                QueueItem.drive_file_id == f["id"]
-            ).first()
+        # Query all existing drive_file_ids from the database in a single query
+        existing_ids = {
+            r[0] for r in db_session.query(QueueItem.drive_file_id).all()
+        }
 
-            if not existing:
-                thumbnail = self.find_thumbnail(f["name"], settings.drive_queue_folder_id)
+        # Only add new ones
+        for f in drive_videos:
+            if f["id"] not in existing_ids:
+                stem = Path(f["name"]).stem
+                thumbnail = thumbnail_by_stem.get(stem)
+                
                 item = QueueItem(
                     drive_file_id=f["id"],
                     filename=f["name"],
@@ -272,3 +292,5 @@ class QueueManager:
         total = db_session.query(QueueItem).count()
         logger.info("Queue sync: +%d new items. Total in DB: %d", new_count, total)
         return new_count, total
+
+
