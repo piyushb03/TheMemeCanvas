@@ -62,7 +62,7 @@ class AppSettings(BaseSettings):
     # AI
     ai_provider: str = "groq"
     groq_api_key: Optional[str] = None
-    groq_model: str = "llama3-70b-8192"
+    groq_model: str = "llama-3.3-70b-versatile"
 
     # Notifications
     telegram_bot_token: str = "YOUR_TELEGRAM_BOT_TOKEN"
