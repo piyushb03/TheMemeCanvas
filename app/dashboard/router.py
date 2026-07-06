@@ -359,3 +359,9 @@ def get_status_breakdown(db: Session = Depends(get_db)) -> Dict:
         "labels": [r.status for r in results],
         "data": [r.count for r in results],
     }
+
+
+@router.get("/health", include_in_schema=True)
+def get_health() -> Dict[str, str]:
+    """Lightweight health check endpoint for pinging services."""
+    return {"status": "ok"}
