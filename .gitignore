@@ -72,6 +72,6 @@ desktop.ini
 *.swp
 *.swo
 
-# Assets (keep directory, not generated files)
-assets/default_thumbnail.jpg
-assets/fonts/
+# Assets
+!assets/
+!assets/default_thumbnail.jpg
