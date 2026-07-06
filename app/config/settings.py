@@ -39,6 +39,7 @@ class AppSettings(BaseSettings):
 
     # Google Drive
     google_service_account_file: Optional[Path] = None
+    google_service_account_json: Optional[str] = None
     google_oauth_client_secrets_file: Optional[Path] = None
     google_oauth_token_file: Optional[Path] = None
     drive_queue_folder_id: str = "YOUR_GOOGLE_DRIVE_QUEUE_FOLDER_ID"
@@ -47,7 +48,9 @@ class AppSettings(BaseSettings):
 
     # YouTube
     youtube_oauth_client_secrets_file: Optional[Path] = None
+    youtube_oauth_client_secrets_json: Optional[str] = None
     youtube_oauth_token_file: Optional[Path] = None
+    youtube_oauth_token_json: Optional[str] = None
     youtube_channel_id: str = "YOUR_YOUTUBE_CHANNEL_ID"
     youtube_privacy_status: str = "public"
     youtube_category_id: int = 24

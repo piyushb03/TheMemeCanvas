@@ -62,6 +62,15 @@ class DriveClient:
                 scopes=SCOPES,
             )
             return creds
+        elif settings.google_service_account_json:
+            import json
+            logger.info("Using Google Service Account credentials from environment variable.")
+            info = json.loads(settings.google_service_account_json)
+            creds = service_account.Credentials.from_service_account_info(
+                info,
+                scopes=SCOPES,
+            )
+            return creds
 
         # --- Option 2: OAuth2 User Credentials ---
         token_file = settings.google_oauth_token_file
