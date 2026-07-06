@@ -288,9 +288,9 @@ class UploadPipeline:
         upload.title = metadata.title
         upload.description = metadata.description
         upload.ai_opening = metadata.ai_opening
-        upload.caption = metadata.caption
+        upload.caption = ""
         upload.tags = metadata.tags
-        upload.hashtags = metadata.hashtags
+        upload.hashtags = []
         db.commit()
 
         return metadata
