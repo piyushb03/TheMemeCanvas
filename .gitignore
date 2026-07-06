@@ -1,0 +1,77 @@
+# =============================================================================
+# .gitignore — TheMemeCanvas Automation Suite
+# =============================================================================
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Credentials (NEVER commit these)
+credentials/
+credentials/*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!frontend/package.json
+!frontend/package-lock.json
+!frontend/tsconfig.json
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+env/
+.tox/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Database
+data/
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+temp_downloads/
+temp_thumbnails/
+*.tmp
+
+# Node / Frontend
+node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/node_modules/
+
+# Docker
+.dockerignore
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Assets (keep directory, not generated files)
+assets/default_thumbnail.jpg
+assets/fonts/

@@ -1,0 +1,903 @@
+# ROLE
+
+You are a Senior Python Software Engineer, AI Engineer, DevOps Engineer, Backend Architect, Automation Engineer, and UI/UX Designer.
+
+Your task is to build a COMPLETE production-grade application from scratch.
+
+This is NOT a demo project.
+This is NOT a prototype.
+This is NOT just a YouTube uploader.
+
+Build a polished, commercial-quality Content Distribution & Automation Platform that can run unattended for months.
+
+The code should be modular, scalable, documented, beautiful, production-ready, and easy to maintain.
+
+Do not take shortcuts.
+
+------------------------------------------------------------
+
+# PROJECT NAME
+
+TheMemeCanvas Automation Suite
+
+------------------------------------------------------------
+
+# PROJECT GOAL
+
+I own a YouTube Shorts and Instagram Reels brand called **TheMemeCanvas**.
+
+I already have **hundreds of videos stored inside a Google Drive folder**.
+
+This folder acts as my Content Library / Queue.
+
+I DO NOT upload a new video every day.
+
+Instead, the application must automatically publish **ONE video every day at exactly 9:00 PM (configurable)** until all queued videos have been uploaded.
+
+The workflow should be:
+
+Google Drive Queue
+
+↓
+
+Find next unpublished video
+
+↓
+
+Download temporarily
+
+↓
+
+Generate metadata using AI
+
+↓
+
+Upload to YouTube Shorts
+
+↓
+
+Upload to Instagram Reels
+
+↓
+
+Apply optimized metadata
+
+↓
+
+Upload thumbnail if available
+
+↓
+
+Move file to Uploaded folder
+
+↓
+
+Save upload history
+
+↓
+
+Delete temporary files
+
+↓
+
+Notify me
+
+Repeat automatically every day.
+
+When the Queue folder becomes empty, notify me immediately and continue checking periodically for newly added videos.
+
+The application should require virtually zero manual work after setup.
+
+------------------------------------------------------------
+
+# IMPORTANT
+
+If any credentials, API keys, folder IDs, URLs, channel IDs, webhook URLs, or secrets are required:
+
+DO NOT hardcode them.
+
+Instead:
+
+• Use placeholders
+• Create a .env.example
+• Create a setup wizard or first-run configuration
+• Explain how to obtain every required credential
+• At the end provide a checklist titled:
+
+"Information Required From User"
+
+------------------------------------------------------------
+
+# PRIMARY FEATURES
+
+The application should automatically:
+
+✅ Monitor Google Drive Queue
+
+✅ Process one video every day
+
+✅ Generate AI title
+
+✅ Generate AI caption
+
+✅ Generate AI first sentence
+
+✅ Generate hashtags
+
+✅ Generate SEO keywords
+
+✅ Generate tags
+
+✅ Upload YouTube Short
+
+✅ Upload Instagram Reel
+
+✅ Upload thumbnail
+
+✅ Move uploaded file
+
+✅ Save upload history
+
+✅ Maintain database
+
+✅ Prevent duplicates
+
+✅ Retry failures
+
+✅ Notify me
+
+✅ Continue indefinitely
+
+------------------------------------------------------------
+
+# TECH STACK
+
+Python
+
+Google Drive API
+
+YouTube Data API v3
+
+Instagram Graph API
+
+SQLite
+
+SQLAlchemy
+
+FastAPI
+
+Jinja2 or React
+
+Bootstrap or TailwindCSS
+
+OpenAI API (pluggable to other providers)
+
+APScheduler
+
+Pillow
+
+FFmpeg
+
+Docker
+
+Docker Compose
+
+Pydantic
+
+Python Logging
+
+------------------------------------------------------------
+
+# PROJECT STRUCTURE
+
+Create a clean professional architecture.
+
+Example:
+
+TheMemeCanvas/
+
+app/
+
+services/
+
+youtube/
+
+instagram/
+
+drive/
+
+ai/
+
+notifications/
+
+dashboard/
+
+scheduler/
+
+database/
+
+models/
+
+config/
+
+utils/
+
+credentials/
+
+logs/
+
+queue/
+
+uploaded/
+
+failed/
+
+templates/
+
+tests/
+
+Dockerfile
+
+docker-compose.yml
+
+requirements.txt
+
+README.md
+
+.env.example
+
+------------------------------------------------------------
+
+# GOOGLE DRIVE
+
+The Queue folder already contains many videos.
+
+The application should:
+
+Read Queue folder
+
+Pick next unpublished video
+
+Download
+
+Upload
+
+Move to Uploaded folder
+
+If upload fails
+
+Move to Failed folder
+
+Store Google Drive File ID
+
+Support:
+
+Oldest First
+
+Newest First
+
+Random
+
+configurable.
+
+------------------------------------------------------------
+
+# YOUTUBE
+
+Upload automatically.
+
+Generate:
+
+AI title
+
+AI description opening
+
+SEO description
+
+AI tags
+
+Upload thumbnail
+
+Schedule or publish
+
+Store Video ID
+
+Never upload duplicates.
+
+------------------------------------------------------------
+
+# INSTAGRAM
+
+Automatically upload same video as Reel.
+
+Generate:
+
+Caption
+
+Hashtags
+
+Optional thumbnail
+
+Store Reel ID.
+
+------------------------------------------------------------
+
+# BRANDING
+
+Brand Name:
+
+TheMemeCanvas
+
+Always include branding naturally.
+
+Base tags should always include:
+
+TheMemeCanvas
+
+thememecanvas
+
+The Meme Canvas
+
+anime
+
+anime memes
+
+cartoon
+
+cartoon memes
+
+funny
+
+funny memes
+
+viral memes
+
+shorts
+
+youtube shorts
+
+instagram reels
+
+daily memes
+
+comedy
+
+lol
+
+AI should intelligently add additional relevant tags based on video content.
+
+------------------------------------------------------------
+
+# DESCRIPTION
+
+Keep one branded description template.
+
+Only vary the opening sentence with AI.
+
+Maintain consistent branding.
+
+------------------------------------------------------------
+
+# TITLES
+
+Generate multiple titles.
+
+Score them.
+
+Choose the best.
+
+Avoid repetition.
+
+Maintain title history.
+
+------------------------------------------------------------
+
+# THUMBNAILS
+
+If matching thumbnail exists:
+
+video001.jpg
+
+upload it.
+
+Otherwise
+
+generate thumbnail automatically.
+
+If generation fails
+
+use branded default thumbnail.
+
+------------------------------------------------------------
+
+# DATABASE
+
+SQLite + SQLAlchemy
+
+Store:
+
+Filename
+
+SHA256
+
+Drive File ID
+
+YouTube Video ID
+
+Instagram Reel ID
+
+Title
+
+Caption
+
+Description
+
+Tags
+
+Hashtags
+
+Duration
+
+Thumbnail
+
+Upload Time
+
+Publish Time
+
+Retry Count
+
+Status
+
+Error Logs
+
+------------------------------------------------------------
+
+# DUPLICATE PROTECTION
+
+Never upload same content twice.
+
+Check:
+
+SHA256
+
+Filename
+
+Drive File ID
+
+Database
+
+------------------------------------------------------------
+
+# RETRIES
+
+Implement exponential retry.
+
+5 min
+
+15 min
+
+30 min
+
+1 hour
+
+then mark Failed.
+
+------------------------------------------------------------
+
+# CONTENT QUEUE MANAGEMENT
+
+Create a proper queue system.
+
+Features:
+
+View remaining videos
+
+View uploaded videos
+
+View failed videos
+
+Estimated remaining days
+
+Skip next upload
+
+Pause uploads
+
+Resume uploads
+
+Force next upload
+
+Change upload order
+
+Re-upload failed content
+
+------------------------------------------------------------
+
+# DASHBOARD
+
+Create a premium dashboard.
+
+Dark mode.
+
+Glassmorphism.
+
+Responsive.
+
+Show:
+
+Remaining queue
+
+Upload history
+
+Failed uploads
+
+Recent logs
+
+Today's upload
+
+Tomorrow's upload
+
+API status
+
+Google Drive status
+
+YouTube status
+
+Instagram status
+
+Notification status
+
+Database status
+
+Storage usage
+
+Retry queue
+
+Estimated remaining days
+
+Charts
+
+------------------------------------------------------------
+
+# NOTIFICATIONS
+
+Implement a notification service with support for multiple providers.
+
+Priority:
+
+1. Telegram Bot
+2. Discord Webhook
+3. Email (SMTP)
+
+Structure the code so WhatsApp support can be added later without major changes.
+
+Send notifications for:
+
+Upload Started
+
+Upload Successful
+
+Upload Failed
+
+Retry Started
+
+Retry Failed
+
+Daily Summary
+
+Weekly Summary
+
+Monthly Summary
+
+Queue Empty
+
+Queue Finished
+
+Authentication Failure
+
+API Quota Warning
+
+Google Drive Disconnected
+
+Database Error
+
+Internet Lost
+
+System Restarted
+
+Scheduler Started
+
+Health Check Failed
+
+------------------------------------------------------------
+
+# DAILY SUMMARY
+
+Example:
+
+📊 TheMemeCanvas Daily Report
+
+Today's Upload
+
+YouTube Status
+
+Instagram Status
+
+Remaining Videos
+
+Estimated Remaining Days
+
+Next Upload
+
+------------------------------------------------------------
+
+# WHEN QUEUE IS EMPTY
+
+Notify:
+
+🎉
+
+All queued videos have been uploaded successfully.
+
+Waiting for new videos.
+
+Continue checking periodically for new content.
+
+------------------------------------------------------------
+
+# HEALTH CHECKS
+
+Every morning automatically verify:
+
+Google Drive
+
+YouTube API
+
+Instagram API
+
+Scheduler
+
+Database
+
+Notifications
+
+Internet
+
+Disk Space
+
+AI Provider
+
+If anything fails
+
+notify immediately.
+
+------------------------------------------------------------
+
+# CONFIGURATION
+
+Everything configurable.
+
+Upload time
+
+(default 9:00 PM)
+
+Timezone
+
+Folder IDs
+
+Notification provider
+
+AI provider
+
+Retry limits
+
+Description template
+
+Brand tags
+
+Upload order
+
+Publish settings
+
+------------------------------------------------------------
+
+# LOGGING
+
+Implement rotating logs.
+
+Separate logs:
+
+System
+
+Scheduler
+
+Google Drive
+
+YouTube
+
+Instagram
+
+AI
+
+Notifications
+
+Errors
+
+------------------------------------------------------------
+
+# SECURITY
+
+Use
+
+.env
+
+OAuth refresh
+
+Secret management
+
+Credential validation
+
+No secrets in code.
+
+------------------------------------------------------------
+
+# README
+
+Create an exceptional README.
+
+Include:
+
+Architecture
+
+Features
+
+Screenshots placeholders
+
+Installation
+
+Configuration
+
+How to obtain API credentials
+
+Google Drive setup
+
+YouTube API setup
+
+Instagram API setup
+
+Telegram Bot setup
+
+
+Docker deployment
+
+Windows deployment
+
+Linux deployment
+
+Troubleshooting
+
+FAQ
+
+Future roadmap
+
+------------------------------------------------------------
+
+# CODE QUALITY
+
+Use:
+
+Type hints
+
+Docstrings
+
+Clean Architecture
+
+SOLID principles
+
+Reusable modules
+
+Dependency injection where appropriate
+
+Well-commented code
+
+Lint-ready
+
+Production ready
+
+Maintainable
+
+Scalable
+
+------------------------------------------------------------
+
+# TESTING
+
+Structure the project so unit and integration tests can be easily added.
+
+------------------------------------------------------------
+
+# FUTURE FEATURES
+
+Design the architecture so the following can be added later without major refactoring:
+
+Facebook Reels
+
+TikTok
+
+Pinterest
+
+Threads
+
+X (Twitter)
+
+LinkedIn
+
+Snapchat Spotlight
+
+Multiple YouTube channels
+
+Multiple Instagram accounts
+
+AI subtitles
+
+AI voiceover
+
+Analytics dashboard
+
+Trending keyword research
+
+Automatic playlists
+
+Automatic comments
+
+A/B testing
+
+Cloud deployment
+
+------------------------------------------------------------
+
+# FINAL REQUIREMENTS
+
+Generate the COMPLETE project.
+
+Do not stop after creating a few files.
+
+Generate all modules.
+
+Generate all folders.
+
+Generate all configuration files.
+
+Generate Docker support.
+
+Generate documentation.
+
+Generate beautiful UI.
+
+Generate placeholder assets where needed.
+
+If any required information is missing from me, replace it with meaningful placeholders such as:
+
+YOUR_GOOGLE_DRIVE_FOLDER_ID
+
+YOUR_UPLOADED_FOLDER_ID
+
+YOUR_FAILED_FOLDER_ID
+
+YOUR_YOUTUBE_CHANNEL_ID
+
+YOUR_OPENAI_API_KEY
+
+YOUR_TELEGRAM_BOT_TOKEN
+
+YOUR_TELEGRAM_CHAT_ID
+
+
+etc.
+
+Finally, create a section titled:
+
+# Information Required From User
+
+List every credential, ID, URL, or configuration value I need to provide before the application can be deployed.
+
+The final result should feel like a polished commercial product rather than a collection of scripts.
