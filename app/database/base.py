@@ -20,31 +20,37 @@ from app.config.settings import settings
 
 logger = logging.getLogger("thememecanvas.database")
 
+is_sqlite = settings.database_url.startswith("sqlite")
+
 # ---------------------------------------------------------------------------
-# Ensure data directory exists
+# Ensure data directory exists (SQLite only)
 # ---------------------------------------------------------------------------
 
-db_path = settings.database_url.replace("sqlite:///", "").replace("./", "")
-Path(db_path).parent.mkdir(parents=True, exist_ok=True)
+if is_sqlite:
+    db_path = settings.database_url.replace("sqlite:///", "").replace("./", "")
+    Path(db_path).parent.mkdir(parents=True, exist_ok=True)
 
 # ---------------------------------------------------------------------------
 # Engine
 # ---------------------------------------------------------------------------
 
+connect_args = {"check_same_thread": False} if is_sqlite else {}
+
 engine = create_engine(
     settings.database_url,
-    connect_args={"check_same_thread": False},  # Required for SQLite + FastAPI
+    connect_args=connect_args,
     echo=False,  # Set to True for SQL query logging during dev
 )
 
 
-@event.listens_for(engine, "connect")
-def set_sqlite_pragma(dbapi_connection, connection_record):
-    """Enable WAL mode and foreign keys for SQLite."""
-    cursor = dbapi_connection.cursor()
-    cursor.execute("PRAGMA journal_mode=WAL")
-    cursor.execute("PRAGMA foreign_keys=ON")
-    cursor.close()
+if is_sqlite:
+    @event.listens_for(engine, "connect")
+    def set_sqlite_pragma(dbapi_connection, connection_record):
+        """Enable WAL mode and foreign keys for SQLite."""
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA journal_mode=WAL")
+        cursor.execute("PRAGMA foreign_keys=ON")
+        cursor.close()
 
 
 # ---------------------------------------------------------------------------
